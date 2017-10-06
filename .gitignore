@@ -1,5 +1,4 @@
 *.log
 *.swp
 *.tgz
-/lib
 /node_modules
