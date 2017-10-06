@@ -12,8 +12,8 @@ const getRepeatLines = (dims, type) => {
     let drawX = type === 'backward' ? -(x) : x
     let moveX = type === 'backward' ? dims.xEnd : dims.x
     return [
-        "M"+ moveX + " " + dims.y    + " l " + drawX + " " +  (-y),
-        "M"+ moveX + " " + dims.yEnd + " l " + drawX + "  " + y
+        "M"+ moveX + " " + dims.y    + " l " + drawX + " " + (-y),
+        "M"+ moveX + " " + dims.yEnd + " l " + drawX + " " + y
     ]    
 }
 
@@ -70,13 +70,14 @@ const getBarLines = (bars, barView) => {
         let line = ["M"+ dims.xEnd +" "+ dims.y +" l 0 "+ barView.bar.height]
 
         if (bar.endSection) 
-            line.push("m"+ (dims.xEnd - barView.bar.repetitionLineSpace) +" "+ dims.y +" l 0 "+ barView.bar.height)
+            line.push("m"+ (dims.xEnd - barView.bar.repetitionLineSpace) +" "+ dims.y 
+                         + " l 0 "+ barView.bar.height)
         
         if (bar.repeat){
             if(bar.repeat === 'forward'){ 
                 line.push("m"+ dims.x +" "+ dims.y +" l 0 "+ barView.bar.height)
             }
-            line.push(getRepeatLines(dims, bar.repeat))       
+            line = line.concat(getRepeatLines(dims, bar.repeat))       
         }
         return line
     })

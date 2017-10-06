@@ -24,7 +24,16 @@ class SvgRenderer{
     render(){
         let svgElems = [];
         if (this.paths.length)
-            svgElems = svgElems.concat(this.paths.map((data, i) => <Path key={'path' + i} d={data}/>))
+            svgElems = svgElems.concat(this.paths.map((data, i) => {
+                if (typeof data === 'object') {
+                    let props = Object.assign({},data)
+                    delete props.d
+                    return <Path key={'path' + i} d={data.d} attr={props}/>
+                }else{
+                    return <Path key={'path' + i} d={data}/>
+                }
+
+            }))
         if (this.texts.length)
             svgElems = svgElems.concat(this.texts.map((props, i) => {
                 props.key = 'text' + i
