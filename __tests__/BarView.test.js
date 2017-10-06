@@ -8,4 +8,4 @@ test('BarView test', () => {
     })
     expect(barView.barsPerLine).toBe(4)
     expect(barView.margins.line).toBe(70)
-});
+})

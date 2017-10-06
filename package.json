@@ -20,5 +20,8 @@
   "dependencies": {
     "raphael": "^2.2.7",
     "react-raphael": "^0.8.5"
+  },
+  "jest":{
+    "testEnvironment":"node"  
   }
 }

@@ -39,11 +39,15 @@ class SvgRenderer{
                 props.key = 'text' + i
                 return <Text {...props}/>
             }))
-        if (this.circles.length)
+        if (this.circles.length){
+            console.log(this.circles)
             svgElems = svgElems.concat(this.circles.map((props, i) => {
+                console.log('props')
+                console.log(props)
                 props.key = 'circle' + i
                 return <Circle {...props}/>
             }))
+        }
         if (this.rects.length)
             svgElems = svgElems.concat(this.rects.map((props, i) => {
                 props.key = 'rect' + i
