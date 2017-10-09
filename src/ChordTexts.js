@@ -7,7 +7,7 @@ const ChordTexts = (() => {
         if (chordType === 'maj7') return"\u2206" 
         if (chordType === 'halfdim') return "\xF8"; 
         
-        return chordType.replace('dim',"\u25CB")
+        return chordType.replace('dim',"\u2218")
 
     }
     const replaceFlat = str => str.replace(/b/g,"\u266D")
@@ -69,7 +69,7 @@ const ChordTexts = (() => {
                 attr: getAttr(fontSizeBass) 
             })
             lines.push({
-                d: "M"+ (bassX - 8) +" "+ (bassY - 7) +" l 24 -10",
+                d: "M"+ (bassX - 8) +" "+ (bassY - 3) +" l 24 -10",
                 "stroke-width": 3
             })
         }
