@@ -1,6 +1,6 @@
 {
   "name": "react-svg-chord-chart",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "React component that renders chord charts in svg",
   "main": "./lib/ChordChart.js",
   "author": "Daniel Martín",
