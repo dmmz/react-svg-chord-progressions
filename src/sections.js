@@ -15,7 +15,7 @@ const sections = (bars) => {
     let sectionRectangles = sectionBars
         .map((bar, i) => ({
             x: getX(bar) - width / 2,
-            y: getY(bar) - height / 2,
+            y: getY(bar) - height * 2 / 3,
             width,
             height
         }))

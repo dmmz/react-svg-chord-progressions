@@ -40,10 +40,7 @@ class SvgRenderer{
                 return <Text {...props}/>
             }))
         if (this.circles.length){
-            console.log(this.circles)
             svgElems = svgElems.concat(this.circles.map((props, i) => {
-                console.log('props')
-                console.log(props)
                 props.key = 'circle' + i
                 return <Circle {...props}/>
             }))

@@ -17,7 +17,7 @@ const ChordTexts = (() => {
         'font-family': 'jazz-font,Verdana,Courier',
         'text-anchor': 'start'
     })
-
+    // repeat chord sign: %
     const getRepeatSign = (x, y) => {
         const sizeRepeatSign = fontSizeChord * 2/3
         const marginRepeatSign = 10 
@@ -42,7 +42,7 @@ const ChordTexts = (() => {
 
         if (chord.same)
             return getRepeatSign(x, y)
-       
+        y = y - 5 //due to new font, we have to put them 5 points higher 
         let lines = []
         let chordText = replaceFlat(chord.pitch) + getSpecialSymbol(chord.chordType)
         let texts =  [{
