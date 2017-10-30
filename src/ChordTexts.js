@@ -65,7 +65,7 @@ const ChordTexts = (() => {
             texts.push({
                 x: bassX,
                 y: bassY,
-                text: chord.bass.substr(1, chord.bass.length),
+                text: replaceFlat(chord.bass.substr(1, chord.bass.length)),
                 attr: getAttr(fontSizeBass) 
             })
             lines.push({
@@ -80,9 +80,11 @@ const ChordTexts = (() => {
     }
 
     const getSvgElems = (bars, barView) => {
+        const timeSignature = bars[0].timeSignature || "44"
         let barChordsText = bars.map(bar => { 
             //we get startXList
-            let startXList = barView.getStartXList(bar.chords.map(chord => chord.duration))
+            let startXList = barView.getStartXList(timeSignature, bar.chords.map(chord => chord.duration))
+
             //we add it as property to each chord     
             let barChords = bar.chords.map((chord, i) => {
                 chord.startX = startXList[i]

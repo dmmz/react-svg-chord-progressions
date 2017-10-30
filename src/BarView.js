@@ -26,10 +26,15 @@ class BarView {
         let y = this.margins.top + (this.bar.height + this.margins.line) * line
         return [x, y]
     }
-    getStartXList(durations){
+    getStartXList(timeSig, durations){
         let widthList = durations.map(duration  => {
-            let divisor = duration === 'quarter'  ?  4 :
+            let divisor
+            if (timeSig == '34')
+                divisor = duration === 'whole' ? 1 : 2
+            else
+                divisor = duration === 'quarter'  ?  4 :
                           duration === 'half'     ?  2 : 1  
+
             return (this.bar.width - this.bar.padding.left) / divisor
         })
         var currentX = this.bar.padding.left;

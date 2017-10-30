@@ -3,24 +3,34 @@ const getY = bar => bar.dimensions.y
 
 const sections = (bars) => {
     let sectionBars = bars.filter(bar => bar.section)
-    let sectionText = sectionBars 
-        .map((bar, i) => ({
+    
+    let hRect = 15 
+
+    let sectionTexts = []
+    let sectionRectangles = []
+    let sectionText, sectionRect, yRect, yText, wRect
+
+    sectionBars.forEach((bar) => {
+        
+        yRect = getY(bar) - hRect - 5
+        yText = yRect + 0.4 * hRect
+        wRect = 10 + 5 * bar.section.length
+        
+        sectionTexts.push({
             x: getX(bar),
-            y: getY(bar),
+            y: yText,
             text: bar.section,
-            attr: { fill:'#000', 'font-size':15}
-        }))
-    let width = 20
-    let height = 20
-    let sectionRectangles = sectionBars
-        .map((bar, i) => ({
-            x: getX(bar) - width / 2,
-            y: getY(bar) - height * 2 / 3,
-            width,
-            height
-        }))
+            attr: {fill:'#000', 'font-size':13}
+        })
+        sectionRectangles.push({
+            x: getX(bar) - wRect / 2,
+            y: yRect,
+            width: wRect,
+            height: hRect
+        })
+    })
     return {
-        texts: sectionText,
+        texts: sectionTexts,
         rects: sectionRectangles
     }
 }
