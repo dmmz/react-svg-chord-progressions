@@ -80,6 +80,7 @@ const ChordTexts = (() => {
     }
 
     const getSvgElems = (bars, barView) => {
+             
         const timeSignature = bars[0].timeSignature || "44"
         let barChordsText = bars.map(bar => { 
             //we get startXList

@@ -23,6 +23,7 @@ class SvgRenderer{
     }
     render(){
         let svgElems = [];
+        
         if (this.paths.length)
             svgElems = svgElems.concat(this.paths.map((data, i) => {
                 if (typeof data === 'object') {
@@ -34,22 +35,25 @@ class SvgRenderer{
                 }
 
             }))
+ 
         if (this.texts.length)
             svgElems = svgElems.concat(this.texts.map((props, i) => {
                 props.key = 'text' + i
                 return <Text {...props}/>
             }))
-        if (this.circles.length){
+
+        if (this.circles.length)
             svgElems = svgElems.concat(this.circles.map((props, i) => {
                 props.key = 'circle' + i
                 return <Circle {...props}/>
             }))
-        }
+        
         if (this.rects.length)
             svgElems = svgElems.concat(this.rects.map((props, i) => {
                 props.key = 'rect' + i
                 return <Rect {...props}/>
             }))
+        
         return svgElems
     }
 }

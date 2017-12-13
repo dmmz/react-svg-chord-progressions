@@ -9,6 +9,13 @@ import SvgRenderer from './SvgRenderer'
 import BarView from './BarView'
 
 class ChordChart extends React.Component {
+    //static propTypes = {
+        //width: PropTypes.integer.isRequired,
+        //bars: PropTypes.array.isRequired,
+        //BarMouseUp: PropTypes.func,
+        //BarMouseDown: PropTypes.func,
+        //BarMouseOver: PropTypes.func
+    //}
     constructor(props){
         super(props)
         let barView = new BarView({
@@ -85,8 +92,12 @@ class ChordChart extends React.Component {
                 mouseup:    (e) => { e.preventDefault(); barMouseUp(i)}
             }
            
-            barComponents.push(Object.assign({}, bar.dimensions, barProps))
+            barComponents.push({...bar.dimensions, ...barProps})
         }
+        barComponents.push({
+            x:219, y:100, width:129,y:40, 
+            attr:{fill:'#fff', 'fill-opacity':0.5,stroke:'#f00', 'stroke-opacity':1}
+        })
         return barComponents.map((props) => <Rect {...props} />) 
  
     }
