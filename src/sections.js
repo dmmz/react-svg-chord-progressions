@@ -1,7 +1,7 @@
 const getX = bar => bar.dimensions.x + 15
 const getY = bar => bar.dimensions.y
 
-const sections = (bars) => {
+const Sections = (bars) => {
     let sectionBars = bars.filter(bar => bar.section)
     
     let hRect = 15 
@@ -34,4 +34,4 @@ const sections = (bars) => {
         rects: sectionRectangles
     }
 }
-export default sections
+export default Sections

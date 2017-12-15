@@ -1,12 +1,13 @@
 import React from 'react'
 import {Paper, Rect} from 'react-raphael'
 import endings from './endings'
-import chordTexts from './ChordTexts'
+import ChordTexts from './ChordTexts'
 import getBarLines from './getBarLines'
 import sections from './sections'
 import timeSignature from './timeSignature'
 import SvgRenderer from './SvgRenderer'
 import BarView from './BarView'
+import Selections from './Selections'
 
 class ChordChart extends React.Component {
     //static propTypes = {
@@ -41,12 +42,18 @@ class ChordChart extends React.Component {
 
         this.bars = this.setBarsDimensions(props.bars, barView)
         this.svg = new SvgRenderer() 
-        this.svg.addObject(chordTexts.getSvgElems(this.bars, barView))
+        const {startX, ...chordTextsSvgElems} = ChordTexts.getSvgElems(this.bars, barView)
+
+        this.svg.addObject(chordTextsSvgElems)
         this.svg.addObject(sections(this.bars, barView))
         this.svg.addObject(getBarLines(this.bars, barView))
         this.svg.addObject(endings(this.bars, barView))
         this.svg.addTexts(timeSignature(this.bars, barView))
         
+        if (props.selections)
+            this.svg.addRects(Selections.getRects(this.bars,barView, startX, props.selections))        
+        
+
         this.barView = barView
     }    
     setBarsDimensions(bars, barView) {
@@ -94,12 +101,7 @@ class ChordChart extends React.Component {
            
             barComponents.push({...bar.dimensions, ...barProps})
         }
-        barComponents.push({
-            x:219, y:100, width:129,y:40, 
-            attr:{fill:'#fff', 'fill-opacity':0.5,stroke:'#f00', 'stroke-opacity':1}
-        })
         return barComponents.map((props) => <Rect {...props} />) 
- 
     }
     render() {
         return (<Paper width={this.props.width} height={this.barView.getHeight(this.bars.length)}>

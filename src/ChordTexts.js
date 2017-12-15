@@ -96,7 +96,6 @@ const ChordTexts = (() => {
                 let x = bar.dimensions.x + chord.startX
                 let y = bar.dimensions.y + barView.bar.padding.top
                 return getChordSvgElems(chord, x, y)
-
             })
             let lines = chordTexts.filter(chord => !!chord.lines) 
                 .map(chord => chord.lines)
@@ -107,21 +106,23 @@ const ChordTexts = (() => {
             circles = [].concat.apply([], circles)
 
             chordTexts = [].concat.apply([], chordTexts.map(chord => chord.texts))
-            return {chordTexts, lines, circles}
+            return {startXList, chordTexts, lines, circles}
         })
 
         let barCircles  = [].concat.apply([], barChordsText.filter(bar => !!bar.circles).map(bar => bar.circles))
         let barLines  = [].concat.apply([], barChordsText.filter(bar => !!bar.lines).map(bar => bar.lines))
+        let startXList = barChordsText.map(bar => bar.startXList)
         barChordsText = [].concat.apply([],barChordsText.map(bar => bar.chordTexts))
+
         let returnObj = {
-            texts: barChordsText
+            texts: barChordsText,
+            startX: startXList
         }
 
         if (barLines) returnObj.paths = barLines   
         if (barCircles) returnObj.circles = barCircles   
         
         return returnObj 
-        
     }
     return {
         getChordSvgElems,
