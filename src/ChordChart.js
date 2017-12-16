@@ -39,10 +39,13 @@ class ChordChart extends React.Component {
                 repetitionLineSpace: 4
             }
         })
-
+        // logic in constructor: it won't be updated with a render caused by receiving new props, 
+        // has to be updated with a 'key' prop change, 
+        // this is done for performance reasons
         this.bars = this.setBarsDimensions(props.bars, barView)
         this.svg = new SvgRenderer() 
         const {startX, ...chordTextsSvgElems} = ChordTexts.getSvgElems(this.bars, barView)
+        this.startX = startX
 
         this.svg.addObject(chordTextsSvgElems)
         this.svg.addObject(sections(this.bars, barView))
@@ -50,10 +53,6 @@ class ChordChart extends React.Component {
         this.svg.addObject(endings(this.bars, barView))
         this.svg.addTexts(timeSignature(this.bars, barView))
         
-        if (props.selections)
-            this.svg.addRects(Selections.getRects(this.bars,barView, startX, props.selections))        
-        
-
         this.barView = barView
     }    
     setBarsDimensions(bars, barView) {
@@ -103,10 +102,18 @@ class ChordChart extends React.Component {
         }
         return barComponents.map((props) => <Rect {...props} />) 
     }
+    selectionsRender(selections){
+        if (!selections || !selections.length)
+            return
+
+        const rects = Selections.getRects(this.bars, this.barView, this.startX, selections)
+        return rects.map((props, i) => <Rect key={i}  {...props}/>) 
+    }
     render() {
         return (<Paper width={this.props.width} height={this.barView.getHeight(this.bars.length)}>
                 {this.svg.render()}
                 {this.barsRender()}
+                {this.selectionsRender(this.props.selections)}
                 </Paper>)
     }
 }
