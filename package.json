@@ -26,6 +26,6 @@
     "react-raphael": "^0.9.0"
   },
   "jest": {
-    "testEnvironment": "node"
+    "testPathIgnorePatterns": ["__tests__/chord-charts/"]
   }
 }

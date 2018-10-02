@@ -1,6 +1,6 @@
 import React from 'react'
 import {Paper, Rect} from 'react-raphael'
-import endings from './endings'
+import Endings from './Endings'
 import ChordTexts from './ChordTexts'
 import getBarLines from './getBarLines'
 import sections from './sections'
@@ -33,32 +33,32 @@ class ChordChart extends React.Component {
             bar: {
                 padding: {
                     top:    25,
-                    left:   8 
+                    left:   8
                 },
                 height: 40,
                 repetitionLineSpace: 4
             }
         })
-        // logic in constructor: it won't be updated with a render caused by receiving new props, 
-        // has to be updated with a 'key' prop change, 
+        // logic in constructor: it won't be updated with a render caused by receiving new props,
+        // has to be updated with a 'key' prop change,
         // this is done for performance reasons
         this.bars = this.setBarsDimensions(props.bars, barView)
-        this.svg = new SvgRenderer() 
+        this.svg = new SvgRenderer()
         const {startX, ...chordTextsSvgElems} = ChordTexts.getSvgElems(this.bars, barView)
         this.startX = startX
 
         this.svg.addObject(chordTextsSvgElems)
         this.svg.addObject(sections(this.bars, barView))
         this.svg.addObject(getBarLines(this.bars, barView))
-        this.svg.addObject(endings(this.bars, barView))
+        this.svg.addObject(Endings(this.bars, barView).getEndings())
         this.svg.addTexts(timeSignature(this.bars, barView))
-        
+
         this.barView = barView
-    }    
+    }
     setBarsDimensions(bars, barView) {
         return bars.map((bar, i) => {
-            let x,y;    
-            [x,y] = barView.getDimensions(i)     
+            let x,y;
+            [x,y] = barView.getDimensions(i)
             bar.dimensions = {x,y}
             return bar
         })
@@ -73,11 +73,11 @@ class ChordChart extends React.Component {
         const activeBar = this.props.activeBar === undefined ? -1 : this.props.activeBar
 
         const opacity = 0.4
-        
+
         const barMouseDown = this.props.barMouseDown || emptyFn
-        const barMouseOver = this.props.barMouseOver || emptyFn 
+        const barMouseOver = this.props.barMouseOver || emptyFn
         const barMouseUp = this.props.barMouseUp || emptyFn
-        
+
         let barComponents = [], barProps, isSelected, isCursorBar
 
         for (let [i,bar] of this.bars.entries()) {
@@ -97,17 +97,17 @@ class ChordChart extends React.Component {
                 mouseover:  (e) => { e.preventDefault(); barMouseOver(i)},
                 mouseup:    (e) => { e.preventDefault(); barMouseUp(i)}
             }
-           
+
             barComponents.push({...bar.dimensions, ...barProps})
         }
-        return barComponents.map((props) => <Rect {...props} />) 
+        return barComponents.map((props) => <Rect {...props} />)
     }
     selectionsRender(selections){
         if (!selections || !selections.length)
             return
 
         const rects = Selections.getRects(this.bars, this.barView, this.startX, selections)
-        return rects.map((props, i) => <Rect key={i}  {...props}/>) 
+        return rects.map((props, i) => <Rect key={i}  {...props}/>)
     }
     render() {
         return (<Paper width={this.props.width} height={this.barView.getHeight(this.bars.length)}>
