@@ -23,19 +23,17 @@ class SvgRenderer{
     }
     render(){
         let svgElems = [];
-        
+
         if (this.paths.length)
             svgElems = svgElems.concat(this.paths.map((data, i) => {
                 if (typeof data === 'object') {
-                    let props = Object.assign({},data)
-                    delete props.d
-                    return <Path key={'path' + i} d={data.d} attr={props}/>
+                  let props = {...data}
+                  delete props.d
+                  return <Path key={'path' + i} d={data.d} attr={props}/>
                 }else{
-                    return <Path key={'path' + i} d={data}/>
+                  return <Path key={'path' + i} d={data}/>
                 }
-
             }))
- 
         if (this.texts.length)
             svgElems = svgElems.concat(this.texts.map((props, i) => {
                 props.key = 'text' + i
@@ -47,13 +45,13 @@ class SvgRenderer{
                 props.key = 'circle' + i
                 return <Circle {...props}/>
             }))
-        
+
         if (this.rects.length)
             svgElems = svgElems.concat(this.rects.map((props, i) => {
                 props.key = 'rect' + i
                 return <Rect {...props}/>
             }))
-        
+
         return svgElems
     }
 }
