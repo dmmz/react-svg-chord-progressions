@@ -5,16 +5,16 @@
      \             /
 */
 const getRepeatLines = (dims, type) => {
-    //x and y determine the diagonal line's length 
-    let y = 5
-    let x = 7
-    
-    let drawX = type === 'backward' ? -(x) : x
-    let moveX = type === 'backward' ? dims.xEnd : dims.x
+    //x and y determine the diagonal line's length
+    const y = 5
+    const x = 7
+
+    const drawX = type === 'backward' ? -(x) : x
+    const moveX = type === 'backward' ? dims.xEnd : dims.x
     return [
         "M"+ moveX + " " + dims.y    + " l " + drawX + " " + (-y),
         "M"+ moveX + " " + dims.yEnd + " l " + drawX + " " + y
-    ]    
+    ]
 }
 
 /* get the points in the repetition
@@ -27,27 +27,27 @@ const getRepetitionCircles = (bars, barView) => {
 
     const getY = (y, type) => {
         let fDist = type === 'up' ? -yDistance : yDistance
-        return y + barView.bar.height / 2 + fDist 
+        return y + barView.bar.height / 2 + fDist
+    }
+    const circle = {
+        r:1,
+        attr:{
+            stroke:'black'
+        }
     }
     const getCircles = (bar, barView) => {
-        let circle = { 
-            r:1,
-            attr:{
-                stroke:'black'
-            }
-        }
-        let x = bar.repeat === 'forward' ? 
-            bar.dimensions.x + xDistance : 
+        let x = bar.repeat === 'forward' ?
+            bar.dimensions.x + xDistance :
             bar.dimensions.x + barView.bar.width - xDistance
-        
-        let y1 = getY(bar.dimensions.y, 'up') 
-        let y2 = getY(bar.dimensions.y, 'down') 
-        
-        let circle1 = Object.assign({},circle,{x, y:y1})
-        let circle2 = Object.assign({},circle,{x, y:y2})
+
+        let y1 = getY(bar.dimensions.y, 'up')
+        let y2 = getY(bar.dimensions.y, 'down')
+
+        let circle1 = {...circle,...{x, y:y1}}
+        let circle2 = {...circle,...{x, y:y2}}
         return [circle1, circle2]
     }
-    
+
     let repetitionCircles = bars
         .filter(bar => !!bar.repeat)
         .map(bar => {
@@ -58,7 +58,7 @@ const getRepetitionCircles = (bars, barView) => {
 const getBarLines = (bars, barView) => {
     if (!barView.bar || barView.bar.width === undefined || barView.bar.height === undefined
         || barView.bar.repetitionLineSpace === undefined)
-        throw "getBarLines: some parameters missing"
+        throw new TypeError("barView arguments needed: bar.width, bar.height and bar.repetitionLineSpace")
 
     let barLines = bars.map(bar => {
         let dims = {
@@ -69,22 +69,22 @@ const getBarLines = (bars, barView) => {
         }
         let line = ["M"+ dims.xEnd +" "+ dims.y +" l 0 "+ barView.bar.height]
 
-        if (bar.endSection) 
-            line.push("m"+ (dims.xEnd - barView.bar.repetitionLineSpace) +" "+ dims.y 
+        if (bar.endSection)
+            line.push("m"+ (dims.xEnd - barView.bar.repetitionLineSpace) +" "+ dims.y
                          + " l 0 "+ barView.bar.height)
-        
+
         if (bar.repeat){
-            if(bar.repeat === 'forward'){ 
+            if(bar.repeat === 'forward'){
                 line.push("m"+ dims.x +" "+ dims.y +" l 0 "+ barView.bar.height)
             }
-            line = line.concat(getRepeatLines(dims, bar.repeat))       
+            line = line.concat(getRepeatLines(dims, bar.repeat))
         }
         return line
     })
     barLines = [].concat.apply([],barLines)
     return {
         paths: barLines,
-        circles: getRepetitionCircles(bars,barView)
+        circles: getRepetitionCircles(bars, barView)
     }
 }
 export default getBarLines
