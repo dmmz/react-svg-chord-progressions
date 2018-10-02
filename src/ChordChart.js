@@ -4,7 +4,7 @@ import Endings from './Endings'
 import ChordTexts from './ChordTexts'
 import getBarLines from './getBarLines'
 import Sections from './Sections'
-import timeSignature from './timeSignature'
+import getTimeSignature from './getTimeSignature'
 import SvgRenderer from './SvgRenderer'
 import BarView from './BarView'
 import Selections from './Selections'
@@ -51,7 +51,7 @@ class ChordChart extends React.Component {
         this.svg.addObject(Sections(this.bars, barView).getSections())
         this.svg.addObject(getBarLines(this.bars, barView))
         this.svg.addObject(Endings(this.bars, barView).getEndings())
-        this.svg.addTexts(timeSignature(this.bars, barView))
+        this.svg.addTexts(getTimeSignature(this.bars, barView))
 
         this.barView = barView
     }
