@@ -1,72 +1,72 @@
-const ChordTexts = (() => { 
-    const fontSizeChord = 35
-    const fontSizeSup = 25 
-    const fontSizeBass = 28 
+const ChordTexts = (() => {
+    const DEFAULT_SIZE_CHORD = 35
+    const DEFAULT_SIZE_SUP = 25
+    const DEFAULT_SIZE_BASS = 28
 
     const getSpecialSymbol = (chordType) => {
-        if (chordType === 'maj7') return"\u2206" 
-        if (chordType === 'halfdim') return "\xF8"; 
-        
-        return chordType.replace('dim',"\u2218")
+        if (chordType === 'maj7') return "\u2206"  //  ∆
+        if (chordType === 'halfdim') return "\xF8";//  ø
 
+        return chordType.replace('dim',"\u2218")  // ∘
     }
     const replaceFlat = str => str.replace(/b/g,"\u266D")
-    const getAttr = fontSize => ({ 
-        fill:'#000', 
-        'font-size':fontSize, 
+    const getAttr = fontSize => ({
+        fill:'#000',
+        'font-size':fontSize,
         'font-family': 'jazz-font,Verdana,Courier',
         'text-anchor': 'start'
     })
     // repeat chord sign: %
     const getRepeatSign = (x, y) => {
-        const sizeRepeatSign = fontSizeChord * 2/3
-        const marginRepeatSign = 10 
-        const repeatSignX = x + marginRepeatSign
-        
-        let circle = {r: 3, attr: {stroke: 'black', fill: 'black'}}
-        let circles = [
-            Object.assign({},{x: x + 12, y: y - 10}, circle),
-            Object.assign({},{x: x + 31, y: y + 6 }, circle)
-        ] 
-        
+      const MARGIN_REPEAT_SIGN = 10
+      const STROKE_WIDTH = 3
+      const sizeRepeatSign = DEFAULT_SIZE_CHORD * 2 / 3
+      const repeatSignX = x + MARGIN_REPEAT_SIGN
+
+      let circle = {r: 3, attr: {stroke: 'black', fill: 'black'}}
+      let circles = [
+            {...circle, ...{x: x + 12, y: y - 10}},
+            {...circle, ...{x: x + 31, y: y + 6 }}
+        ]
+
         let lines = []
         lines.push({
-            d: "M"+ repeatSignX  +" "+ (y +  marginRepeatSign) 
-                + " l " + sizeRepeatSign + " " + (-fontSizeChord + marginRepeatSign),
-            "stroke-width": 3
+          d: "M" + repeatSignX  +" "+ (y +  MARGIN_REPEAT_SIGN)
+          + " l " + sizeRepeatSign + " " + (-DEFAULT_SIZE_CHORD + MARGIN_REPEAT_SIGN),
+            "stroke-width": STROKE_WIDTH
         })
         return {lines, texts:[], circles}
-    
+
     }
     const getChordSvgElems = (chord, x, y) => {
 
         if (chord.same)
             return getRepeatSign(x, y)
-        y = y - 5 //due to new font, we have to put them 5 points higher 
+        y = y - 5 //due to font, we have to put them 5 points higher
         let lines = []
         let chordText = replaceFlat(chord.pitch) + getSpecialSymbol(chord.chordType)
         let texts =  [{
             x,
-            y, 
+            y,
             text: chordText,
-            attr: getAttr(fontSizeChord)
+            attr: getAttr(DEFAULT_SIZE_CHORD)
         }]
         if (chord.sup) {
             texts.push({
                 x: x + chordText.length * 14,
-                y: y - fontSizeChord / 3,
+                y: y - DEFAULT_SIZE_CHORD / 3,
                 text: replaceFlat(chord.sup.substr(1,chord.sup.length - 2)),//removing parenthesis
-                attr: getAttr(fontSizeSup) 
+                attr: getAttr(DEFAULT_SIZE_SUP)
             })
         }
         if (chord.bass) {
-            let bassX = x + chordText.length * 10 
-            let bassY = y + 22 
+            let bassX = x + chordText.length * 10
+            let bassY = y + 22
             texts.push({
                 x: bassX,
                 y: bassY,
                 text: replaceFlat(chord.bass.substr(1, chord.bass.length)),
-                attr: getAttr(fontSizeBass) 
+                attr: getAttr(DEFAULT_SIZE_BASS)
             })
             lines.push({
                 d: "M"+ (bassX - 8) +" "+ (bassY - 3) +" l 24 -10",
@@ -80,28 +80,28 @@ const ChordTexts = (() => {
     }
 
     const getSvgElems = (bars, barView) => {
-             
+
         const timeSignature = bars[0].timeSignature || "44"
-        let barChordsText = bars.map(bar => { 
+        let barChordsText = bars.map(bar => {
             //we get startXList
             let startXList = barView.getStartXList(timeSignature, bar.chords.map(chord => chord.duration))
 
-            //we add it as property to each chord     
+            //we add it as property to each chord
             let barChords = bar.chords.map((chord, i) => {
                 chord.startX = startXList[i]
                 return chord
             })
-            
+
             let chordTexts = barChords.map((chord) => {
                 let x = bar.dimensions.x + chord.startX
                 let y = bar.dimensions.y + barView.bar.padding.top
                 return getChordSvgElems(chord, x, y)
             })
-            let lines = chordTexts.filter(chord => !!chord.lines) 
+            let lines = chordTexts.filter(chord => !!chord.lines)
                 .map(chord => chord.lines)
             lines = [].concat.apply([], lines)
 
-            let circles = chordTexts.filter(chord => !!chord.circles) 
+            let circles = chordTexts.filter(chord => !!chord.circles)
                 .map(chord => chord.circles)
             circles = [].concat.apply([], circles)
 
@@ -119,10 +119,10 @@ const ChordTexts = (() => {
             startX: startXList
         }
 
-        if (barLines) returnObj.paths = barLines   
-        if (barCircles) returnObj.circles = barCircles   
-        
-        return returnObj 
+        if (barLines) returnObj.paths = barLines
+        if (barCircles) returnObj.circles = barCircles
+
+        return returnObj
     }
     return {
         getChordSvgElems,
@@ -130,4 +130,4 @@ const ChordTexts = (() => {
     }
 })()
 
-export default ChordTexts 
+export default ChordTexts
