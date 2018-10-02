@@ -3,7 +3,7 @@ import {Paper, Rect} from 'react-raphael'
 import Endings from './Endings'
 import ChordTexts from './ChordTexts'
 import getBarLines from './getBarLines'
-import sections from './sections'
+import Sections from './Sections'
 import timeSignature from './timeSignature'
 import SvgRenderer from './SvgRenderer'
 import BarView from './BarView'
@@ -48,7 +48,7 @@ class ChordChart extends React.Component {
         this.startX = startX
 
         this.svg.addObject(chordTextsSvgElems)
-        this.svg.addObject(sections(this.bars, barView))
+        this.svg.addObject(Sections(this.bars, barView).getSections())
         this.svg.addObject(getBarLines(this.bars, barView))
         this.svg.addObject(Endings(this.bars, barView).getEndings())
         this.svg.addTexts(timeSignature(this.bars, barView))
