@@ -1,6 +1,6 @@
 import getTimeSignature from '../src/getTimeSignature'
 import BarView from '../src/BarView'
-import aloneTogether from './chord-charts/alone-together'
+import aloneTogether from './chord-progressions/alone-together'
 
 describe('getTimeSignature', () => {
   let barView, bars

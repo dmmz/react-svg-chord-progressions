@@ -1,6 +1,6 @@
 import getBarLines from '../src/getBarLines'
 import BarView from '../src/BarView'
-import aloneTogether from './chord-charts/alone-together'
+import aloneTogether from './chord-progressions/alone-together'
 
 describe('getBarLines', () => {
   const barView = new BarView()

@@ -1,5 +1,5 @@
 import Sections from '../src/Sections'
-import aloneTogether from './chord-charts/alone-together'
+import aloneTogether from './chord-progressions/alone-together'
 import BarView from '../src/BarView'
 describe('Sections', () => {
 
