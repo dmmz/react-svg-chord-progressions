@@ -3,7 +3,7 @@
   "version": "1.0.10",
   "description": "React component that renders chord charts in svg.",
   "main": "./lib/ChordChart.js",
-  "author": "Daniel Martín",
+  "author": "dmmz",
   "license": "MIT",
   "scripts": {
     "test": "jest",
@@ -13,6 +13,7 @@
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-core": "^6.25.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "babel-watch": "^2.0.7",
@@ -26,6 +27,8 @@
     "react-raphael": "^0.9.0"
   },
   "jest": {
-    "testPathIgnorePatterns": ["__tests__/chord-charts/"]
+    "testPathIgnorePatterns": [
+      "__tests__/chord-charts/"
+    ]
   }
 }

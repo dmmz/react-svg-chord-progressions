@@ -8,15 +8,20 @@ import getTimeSignature from './getTimeSignature'
 import SvgRenderer from './SvgRenderer'
 import BarView from './BarView'
 import Selections from './Selections'
+import PropTypes from 'prop-types'
 
 class ChordChart extends React.Component {
-    //static propTypes = {
-        //width: PropTypes.integer.isRequired,
-        //bars: PropTypes.array.isRequired,
-        //BarMouseUp: PropTypes.func,
-        //BarMouseDown: PropTypes.func,
-        //BarMouseOver: PropTypes.func
-    //}
+     static propTypes = {
+        width: PropTypes.number.isRequired,
+        bars: PropTypes.array.isRequired,
+        BarMouseUp: PropTypes.func,
+        BarMouseDown: PropTypes.func,
+        BarMouseOver: PropTypes.func,
+        colorSelected: PropTypes.string,
+        colorActive: PropTypes.string,
+        activeBar: PropTypes.number,
+        selectedBars: PropTypes.array
+    }
     constructor(props){
         super(props)
         let barView = new BarView({
@@ -42,7 +47,7 @@ class ChordChart extends React.Component {
         // logic in constructor: it won't be updated with a render caused by receiving new props,
         // has to be updated with a 'key' prop change,
         // this is done for performance reasons
-        this.bars = this.setBarsDimensions(props.bars, barView)
+        this.bars = props.bars.map((bar, i) => barView.setDimensions(bar,i))
         this.svg = new SvgRenderer()
         const {startX, ...chordTextsSvgElems} = ChordTexts.getSvgElems(this.bars, barView)
         this.startX = startX
@@ -54,14 +59,6 @@ class ChordChart extends React.Component {
         this.svg.addTexts(getTimeSignature(this.bars, barView))
 
         this.barView = barView
-    }
-    setBarsDimensions(bars, barView) {
-        return bars.map((bar, i) => {
-            let x,y;
-            [x,y] = barView.getDimensions(i)
-            bar.dimensions = {x,y}
-            return bar
-        })
     }
     barsRender() {
         const emptyFn = () => {}

@@ -1,5 +1,5 @@
 {
     "presets":["env","react"],
     "ignore": "node_modules",
-    "plugins": ["transform-object-rest-spread"]
+    "plugins": ["transform-object-rest-spread","transform-class-properties"]
 }
