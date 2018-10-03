@@ -10,7 +10,7 @@ import BarView from './BarView'
 import Selections from './Selections'
 import PropTypes from 'prop-types'
 
-class ChordChart extends React.Component {
+class ChordProgression extends React.Component {
      static propTypes = {
         width: PropTypes.number.isRequired,
         bars: PropTypes.array.isRequired,
@@ -114,4 +114,4 @@ class ChordChart extends React.Component {
                 </Paper>)
     }
 }
-export default ChordChart
+export default ChordProgression
