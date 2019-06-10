@@ -2,7 +2,7 @@
   "name": "react-svg-chord-progressions",
   "version": "1.0.10",
   "description": "React component that renders chord charts in svg.",
-  "main": "./lib/ChordChart.js",
+  "main": "./lib/ChordProgression.js",
   "author": "dmmz",
   "license": "MIT",
   "scripts": {
