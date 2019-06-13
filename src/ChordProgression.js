@@ -1,5 +1,4 @@
 import React from 'react'
-import {Paper, Rect} from 'react-raphael'
 import Endings from './Endings'
 import ChordTexts from './ChordTexts'
 import getBarLines from './getBarLines'
@@ -85,11 +84,9 @@ class ChordProgression extends React.Component {
                 key: 'bar' + i,
                 width:  this.barView.bar.width,
                 height: this.barView.bar.height,
-                attr: {
-                    fill: isCursorBar ? colorActive : isSelected ? colorSelected : "#fff",
-                    'fill-opacity': isSelected || isCursorBar ? opacity : 0,
-                    'stroke-opacity': 0
-                },
+                fill: isCursorBar ? colorActive : isSelected ? colorSelected : "#fff",
+                fillOpacity: isSelected || isCursorBar ? opacity : 0,
+                strokeOpacity: 0,
                 mousedown:  (e) => { e.preventDefault(); barMouseDown(i)},
                 mouseover:  (e) => { e.preventDefault(); barMouseOver(i)},
                 mouseup:    (e) => { e.preventDefault(); barMouseUp(i)}
@@ -97,21 +94,21 @@ class ChordProgression extends React.Component {
 
             barComponents.push({...bar.dimensions, ...barProps})
         }
-        return barComponents.map((props) => <Rect {...props} />)
+        return barComponents.map((props) => <rect {...props} />)
     }
     selectionsRender(selections){
         if (!selections || !selections.length)
             return
 
         const rects = Selections.getRects(this.bars, this.barView, this.startX, selections)
-        return rects.map((props, i) => <Rect key={i}  {...props}/>)
+        return rects.map((props, i) => <rect key={i}  {...props}/>)
     }
     render() {
-        return (<Paper width={this.props.width} height={this.barView.getHeight(this.bars.length)}>
+        return (<svg width={this.props.width} height={this.barView.getHeight(this.bars.length)}>
                 {this.svg.render()}
                 {this.barsRender()}
-                {this.selectionsRender(this.props.selections)}
-                </Paper>)
+                {/*this.selectionsRender(this.props.selections)*/}
+                </svg>)
     }
 }
 export default ChordProgression

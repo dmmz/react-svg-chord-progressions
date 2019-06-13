@@ -1,7 +1,7 @@
 const ChordTexts = (() => {
     const DEFAULT_SIZE_CHORD = 35
     const DEFAULT_SIZE_SUP = 25
-    const DEFAULT_SIZE_BASS = 28
+    const DEFAULT_SIZE_BASS = 25
 
     const getSpecialSymbol = (chordType) => {
         if (chordType === 'maj7') return "\u2206"  //  ∆
@@ -12,9 +12,9 @@ const ChordTexts = (() => {
     const replaceFlat = str => str.replace(/b/g,"\u266D")
     const getAttr = fontSize => ({
         fill:'#000',
-        'font-size':fontSize,
-        'font-family': 'jazz-font,Verdana,Courier',
-        'text-anchor': 'start'
+        fontSize,
+        fontFamily: 'jazz-font,Verdana,Courier',
+        textAnchor: 'start'
     })
     // repeat chord sign: %
     const getRepeatSign = (x, y) => {
@@ -23,17 +23,18 @@ const ChordTexts = (() => {
       const sizeRepeatSign = DEFAULT_SIZE_CHORD * 2 / 3
       const repeatSignX = x + MARGIN_REPEAT_SIGN
 
-      let circle = {r: 3, attr: {stroke: 'black', fill: 'black'}}
+      let circle = {r: 3, stroke: 'black', fill: 'black'}
       let circles = [
-            {...circle, ...{x: x + 12, y: y - 10}},
-            {...circle, ...{x: x + 31, y: y + 6 }}
+            {...circle, ...{cx: x + 12, cy: y - 10}},
+            {...circle, ...{cx: x + 31, cy: y + 6 }}
         ]
 
         let lines = []
         lines.push({
-          d: "M" + repeatSignX  +" "+ (y +  MARGIN_REPEAT_SIGN)
-          + " l " + sizeRepeatSign + " " + (-DEFAULT_SIZE_CHORD + MARGIN_REPEAT_SIGN),
-            "stroke-width": STROKE_WIDTH
+            d: "M" + repeatSignX  +" "+ (y +  MARGIN_REPEAT_SIGN)
+                + " l " + sizeRepeatSign + " " + (-DEFAULT_SIZE_CHORD + MARGIN_REPEAT_SIGN),
+            strokeWidth: STROKE_WIDTH,
+            stroke: 'black'
         })
         return {lines, texts:[], circles}
 
@@ -42,35 +43,36 @@ const ChordTexts = (() => {
 
         if (chord.same)
             return getRepeatSign(x, y)
-        y = y - 5 //due to font, we have to put them 5 points higher
+        y += 5 //due to font, we have to put them 5 points higher
         let lines = []
         let chordText = replaceFlat(chord.pitch) + getSpecialSymbol(chord.chordType)
         let texts =  [{
             x,
             y,
             text: chordText,
-            attr: getAttr(DEFAULT_SIZE_CHORD)
+            ...getAttr(DEFAULT_SIZE_CHORD)
         }]
         if (chord.sup) {
             texts.push({
                 x: x + chordText.length * 14,
                 y: y - DEFAULT_SIZE_CHORD / 3,
                 text: replaceFlat(chord.sup.substr(1,chord.sup.length - 2)),//removing parenthesis
-                attr: getAttr(DEFAULT_SIZE_SUP)
+                ...getAttr(DEFAULT_SIZE_SUP)
             })
         }
         if (chord.bass) {
             let bassX = x + chordText.length * 10
-            let bassY = y + 22
+            let bassY = y + 20
             texts.push({
                 x: bassX,
                 y: bassY,
                 text: replaceFlat(chord.bass.substr(1, chord.bass.length)),
-                attr: getAttr(DEFAULT_SIZE_BASS)
+                ...getAttr(DEFAULT_SIZE_BASS)
             })
-            lines.push({
-                d: "M"+ (bassX - 8) +" "+ (bassY - 3) +" l 24 -10",
-                "stroke-width": 3
+            lines.push({    
+                d: "M"+ (bassX - 10) +" "+ ( y + 10 ) +" l 24 -15",
+                strokeWidth: 3,
+                stroke: 'black'
             })
         }
         let returnObj = {texts}

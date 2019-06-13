@@ -14,7 +14,7 @@ const Endings = (bars, barView, settings = {}) => {
     const numberSize = settings.numberSize || DEFAULT_NUMBER_SIZE
     const numberColor = settings.numberColor || DEFAULT_NUMBER_COLOR
 
-    const numberMarginY = MARGIN_Y - numberSize * 0.6
+    const numberMarginY = MARGIN_Y - numberSize
 
     const getDefaultSettings = () => ({numberSize, numberColor})
 
@@ -36,11 +36,9 @@ const Endings = (bars, barView, settings = {}) => {
             x: bar.dimensions.x + NUMBER_MARGIN_X,
             y:  bar.dimensions.y - numberMarginY,
             text: bar.ending.toString(),
-            attr: {
-                fill: numberColor,
-                'font-size': numberSize,
-                'text-anchor': 'start'
-            }
+            fill: numberColor,
+            fontSize: numberSize,
+            textAnchor: 'start'
         }))
     return {
         getDefaultSettings,

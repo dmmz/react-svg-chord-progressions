@@ -1,7 +1,5 @@
-
-
 const Sections = (bars, settings = {}) => {
-    const DEFAULT_TEXT_COLOR = '#000'
+    const DEFAULT_TEXT_COLOR = '#333'
     const DEFAULT_TEXT_SIZE = 13
 
     const textColor = settings.textColor || DEFAULT_TEXT_COLOR
@@ -17,26 +15,30 @@ const Sections = (bars, settings = {}) => {
 
     let sectionTexts = []
     let sectionRectangles = []
-    let sectionText, sectionRect, yRect, yText, wRect
+    let yRect, yText, wRect
 
     sectionBars.forEach((bar) => {
 
         yRect = getY(bar) - hRect - 5
-        yText = yRect + 0.4 * hRect
+        yText = yRect + 0.8 * hRect
         wRect = 10 + 5 * bar.section.length // rectangle's width
 
         sectionTexts.push({
-            x: getX(bar),
+            x: getX(bar) - wRect / 2,
             y: yText,
             text: bar.section,
-            attr: {fill: textColor, 'font-size': textSize}
+            fill: textColor, 
+            fontSize: textSize
         })
 
         sectionRectangles.push({
             x: getX(bar) - wRect / 2,
             y: yRect,
             width: wRect,
-            height: hRect
+            height: hRect,
+            fill: 'none',
+            stroke: 'black',
+            strokeWidth: 1,
         })
     })
     return {

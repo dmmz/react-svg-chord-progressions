@@ -1,5 +1,5 @@
 import React from 'react';
-import {Path, Text, Circle, Rect} from 'react-raphael';
+
 class SvgRenderer{
     constructor(){
         this.paths = [];
@@ -12,9 +12,6 @@ class SvgRenderer{
             this[key] = this[key].concat(obj[key])
         }
     }
-    addPaths(arr) {
-        this.addObject({paths: arr})
-    }
     addRects(arr) {
         this.addObject({rects: arr})
     }
@@ -24,34 +21,35 @@ class SvgRenderer{
     render(){
         let svgElems = [];
 
-        if (this.paths.length)
+        if (this.paths.length){
             svgElems = svgElems.concat(this.paths.map((data, i) => {
+
                 if (typeof data === 'object') {
-                  let props = {...data}
-                  delete props.d
-                  return <Path key={'path' + i} d={data.d} attr={props}/>
-                }else{
-                  return <Path key={'path' + i} d={data}/>
+                  const {d,  ...props} = {...data}
+                  return <path d={d} {...props}/>
                 }
+                
+                return <path d={data} stroke="black" strokeWidth="1px"/>
             }))
-        if (this.texts.length)
+        }
+        if (this.texts.length){
             svgElems = svgElems.concat(this.texts.map((props, i) => {
-                props.key = 'text' + i
-                return <Text {...props}/>
+                let text
+                ({text, ...props} = props);   
+                return <text {...props}>{text}</text>
             }))
+        }
 
         if (this.circles.length)
             svgElems = svgElems.concat(this.circles.map((props, i) => {
-                props.key = 'circle' + i
-                return <Circle {...props}/>
+                return <circle {...props}/>
             }))
 
-        if (this.rects.length)
+        if (this.rects.length){
             svgElems = svgElems.concat(this.rects.map((props, i) => {
-                props.key = 'rect' + i
-                return <Rect {...props}/>
+                return <rect {...props}/>
             }))
-
+        }
         return svgElems
     }
 }

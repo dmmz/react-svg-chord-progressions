@@ -11,23 +11,23 @@ const getTimeSignature = (bars, barView, settings = {}) => {
   let timeSig = bars[0].timeSignature
   let attrTimeSig = {
     fill: color,
-    'font-size': size,
-    'text-anchor': 'start'
+    fontSize: size,
+    textAnchor: 'start'
   }
   let timeSigX = bars[0].dimensions.x -15
-  let baseY = bars[0].dimensions.y + barView.bar.height / 2
-  let distance = 9
+  let baseY = bars[0].dimensions.y + barView.bar.height / 2 + 5
+  let distance = 10
 
   return [{
       x:  timeSigX,
       y:  baseY - distance ,
       text: timeSig[0].toString(),
-      attr:attrTimeSig
+      ...attrTimeSig
     },{
       x: timeSigX ,
       y: baseY + distance,
       text: timeSig[1].toString(),
-      attr:attrTimeSig
+      ...attrTimeSig
    }]
 }
 export default getTimeSignature

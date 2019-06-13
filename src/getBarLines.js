@@ -31,9 +31,7 @@ const getRepetitionCircles = (bars, barView) => {
     }
     const circle = {
         r:1,
-        attr:{
-            stroke:'black'
-        }
+        stroke:'black'
     }
     const getCircles = (bar, barView) => {
         let x = bar.repeat === 'forward' ?
@@ -43,8 +41,8 @@ const getRepetitionCircles = (bars, barView) => {
         let y1 = getY(bar.dimensions.y, 'up')
         let y2 = getY(bar.dimensions.y, 'down')
 
-        let circle1 = {...circle,...{x, y:y1}}
-        let circle2 = {...circle,...{x, y:y2}}
+        let circle1 = {...circle,...{cx: x, cy:y1}}
+        let circle2 = {...circle,...{cx: x, cy:y2}}
         return [circle1, circle2]
     }
 
