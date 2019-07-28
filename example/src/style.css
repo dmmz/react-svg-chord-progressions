@@ -1,0 +1,6 @@
+@font-face { 
+    font-family: 'jazz-font'; 
+    src: url('fonts/chords.woff') format('woff'), 
+         url('fonts/chords.ttf') format('truetype'), 
+         url('fonts/chords.svg#webfont') format('svg'); 
+}
