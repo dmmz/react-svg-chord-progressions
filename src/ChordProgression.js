@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import useDimensions from "react-use-dimensions";
+
 import Endings from "./Endings";
 import ChordTexts from "./ChordTexts";
 import getBarLines from "./getBarLines";
@@ -21,42 +23,9 @@ const propTypes = {
   selectedBars: PropTypes.array
 };
 
-// Hook
-
-function useWindowSize() {
-  const isClient = typeof window === "object";
-
-  function getSize() {
-    return {
-      width: isClient ? window.innerWidth : undefined,
-      height: isClient ? window.innerHeight : undefined
-    };
-  }
-
-  const [windowSize, setWindowSize] = useState(getSize);
-
-  useEffect(() => {
-    if (!isClient) {
-      return false;
-    }
-
-    function handleResize() {
-      setWindowSize(getSize());
-    }
-
-    window.addEventListener("resize", handleResize);
-
-    return () => window.removeEventListener("resize", handleResize);
-  }, []); // Empty array ensures that effect is only run on mount and unmount
-
-  return windowSize;
-}
-
-const ChordProgression = props => {
-  const size = useWindowSize();
-
+const SvgChordProgression = props => {
   let barView = new BarView({
-    width: size.width,
+    width: props.width,
     barsPerLine: 4,
     sub: 10,
     sup: 10,
@@ -155,4 +124,19 @@ const ChordProgression = props => {
     </svg>
   );
 };
+const ChordProgression = props => {
+  const ref = useRef(null);
+  const [width, setWidth] = useState(0);
+  useEffect(() => {
+    if (!ref.current || !ref.current.getBoundingClientRect().width) return;
+    setWidth(ref.current.getBoundingClientRect().width);
+  }, [ref.current]);
+
+  return (
+    <div ref={ref}>
+      {!!width && <SvgChordProgression width={width} {...props} />}
+    </div>
+  );
+};
+
 export default ChordProgression;
