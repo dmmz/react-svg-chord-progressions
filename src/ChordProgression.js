@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import useDimensions from "react-use-dimensions";
+
 
 import Endings from "./Endings";
 import ChordTexts from "./ChordTexts";
