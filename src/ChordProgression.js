@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 
-
 import Endings from "./Endings";
 import ChordTexts from "./ChordTexts";
 import getBarLines from "./getBarLines";
@@ -49,6 +48,7 @@ const SvgChordProgression = props => {
   // this is done for performance reasons
   const bars = props.bars.map((bar, i) => barView.setDimensions(bar, i));
   const svg = new SvgRenderer();
+
   const { startX, ...chordTextsSvgElems } = ChordTexts.getSvgElems(
     bars,
     barView

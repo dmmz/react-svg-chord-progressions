@@ -1,12 +1,11 @@
-const ChordTexts = (() => {
-  const DEFAULT_SIZE_CHORD = 30;
-  const DEFAULT_SIZE_SUP = 25;
-  const DEFAULT_SIZE_BASS = 25;
+import "core-js/fn/array/flat-map";
 
-  const scale = 0.4;
-  const defaultSizeChord = DEFAULT_SIZE_CHORD * scale;
-  const defaultSizeBass = DEFAULT_SIZE_BASS * scale;
-  const defaultSizeSup = DEFAULT_SIZE_SUP * scale;
+const ChordTexts = (() => {
+  const scale = 0.7;
+  const defaultSizeChord = 30 * scale;
+  const defaultSizeBass = 25 * scale;
+  const defaultSizeSup = 25 * scale;
+  const strokeWidth = 3 * scale;
 
   const getSpecialSymbol = chordType => {
     if (chordType === "maj7") return "\u2206"; //  ∆
@@ -24,10 +23,9 @@ const ChordTexts = (() => {
   // repeat chord sign: %
   const getRepeatSign = (x, y) => {
     const MARGIN_REPEAT_SIGN = 10;
-    const STROKE_WIDTH = 3 * scale;
     const repeatSignX = x + MARGIN_REPEAT_SIGN;
     const repeatSignY = y + MARGIN_REPEAT_SIGN * scale;
-    const repeatSignSize = 24 * scale;
+    const repeatSignSize = 20 * scale;
 
     let circle = { r: 3 * scale, stroke: "black", fill: "black" };
     let circles = [
@@ -46,7 +44,7 @@ const ChordTexts = (() => {
         repeatSignSize +
         " " +
         -1 * repeatSignSize,
-      strokeWidth: STROKE_WIDTH,
+      strokeWidth,
       stroke: "black"
     });
     return { lines, texts: [], circles };
@@ -69,7 +67,7 @@ const ChordTexts = (() => {
       texts.push({
         x: x + scale * (chordText.length * 10 + 5),
         y: y - scale * (defaultSizeChord / 3),
-        text: replaceFlat(chord.sup.substr(1, chord.sup.length - 2)), //removing parenthesis
+        text: replaceFlat(chord.sup.substr(1, chord.sup.length - 2)),
         ...getAttr(defaultSizeSup)
       });
     }
@@ -92,7 +90,7 @@ const ChordTexts = (() => {
           scale * 24 +
           " " +
           scale * -15,
-        strokeWidth: 3 * scale,
+        strokeWidth,
         stroke: "black"
       });
     }
@@ -103,8 +101,8 @@ const ChordTexts = (() => {
 
   const getSvgElems = (bars, barView) => {
     const timeSignature = bars[0].timeSignature || "44";
+
     let barChordsText = bars.map(bar => {
-      //we get startXList
       let startXList = barView.getStartXList(
         timeSignature,
         bar.chords.map(chord => chord.duration)
@@ -120,33 +118,29 @@ const ChordTexts = (() => {
         let y = bar.dimensions.y + barView.bar.padding.top;
         return getChordSvgElems(chord, x, y);
       });
+
       let lines = chordTexts
         .filter(chord => !!chord.lines)
-        .map(chord => chord.lines);
-      lines = [].concat.apply([], lines);
+        .flatMap(chord => chord.lines);
 
       let circles = chordTexts
         .filter(chord => !!chord.circles)
-        .map(chord => chord.circles);
-      circles = [].concat.apply([], circles);
+        .flatMap(chord => chord.circles);
 
-      chordTexts = [].concat.apply([], chordTexts.map(chord => chord.texts));
+      chordTexts = chordTexts.flatMap(chord => chord.texts);
       return { startXList, chordTexts, lines, circles };
     });
 
-    let barCircles = [].concat.apply(
-      [],
-      barChordsText.filter(bar => !!bar.circles).map(bar => bar.circles)
-    );
-    let barLines = [].concat.apply(
-      [],
-      barChordsText.filter(bar => !!bar.lines).map(bar => bar.lines)
-    );
+    let barCircles = barChordsText
+      .filter(bar => !!bar.circles)
+      .flatMap(bar => bar.circles);
+
+    let barLines = barChordsText
+      .filter(bar => !!bar.lines)
+      .flatMap(bar => bar.lines);
+
     let startXList = barChordsText.map(bar => bar.startXList);
-    barChordsText = [].concat.apply(
-      [],
-      barChordsText.map(bar => bar.chordTexts)
-    );
+    barChordsText = barChordsText.flatMap(bar => bar.chordTexts);
 
     let returnObj = {
       texts: barChordsText,
