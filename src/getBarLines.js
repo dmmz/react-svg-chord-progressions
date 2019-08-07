@@ -1,5 +1,3 @@
-import "core-js/fn/array/flat-map";
-
 /** get diagonal repeat lines: looks something like
  *   /             \
     |.             .|

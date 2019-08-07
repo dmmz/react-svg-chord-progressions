@@ -1,5 +1,3 @@
-import "core-js/fn/array/flat-map";
-
 const ChordTexts = (() => {
   const scale = 0.7;
   const defaultSizeChord = 30 * scale;

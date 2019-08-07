@@ -1,5 +1,3 @@
-import "core-js/fn/array/flat-map";
-
 const Endings = (bars, barView, settings = {}) => {
   if (!bars || !bars.length) {
     throw new TypeError("bars must be a non-empty array");
