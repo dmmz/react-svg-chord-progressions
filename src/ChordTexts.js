@@ -1,17 +1,9 @@
-const ChordTexts = (() => {
-  const scale = 0.7;
+const ChordTexts = (scale = 1) => {
   const defaultSizeChord = 30 * scale;
   const defaultSizeBass = 25 * scale;
   const defaultSizeSup = 25 * scale;
   const strokeWidth = 3 * scale;
 
-  const getSpecialSymbol = chordType => {
-    if (chordType === "maj7") return "\u2206"; //  ∆
-    if (chordType === "halfdim") return "\xF8"; //  ø
-
-    return chordType.replace("dim", "\u2218"); // ∘
-  };
-  const replaceFlat = str => str.replace(/b/g, "\u266D");
   const getAttr = fontSize => ({
     fill: "#000",
     fontSize,
@@ -51,8 +43,7 @@ const ChordTexts = (() => {
     if (chord.same) return getRepeatSign(x, y);
     y += 5; //due to font, we have to put them 5 points higher
     let lines = [];
-    let chordText =
-      replaceFlat(chord.pitch) + getSpecialSymbol(chord.chordType);
+    let chordText = chord.pitch + chord.chordType;
     let texts = [
       {
         x,
@@ -65,7 +56,7 @@ const ChordTexts = (() => {
       texts.push({
         x: x + scale * (chordText.length * 10 + 5),
         y: y - scale * (defaultSizeChord / 3),
-        text: replaceFlat(chord.sup.substr(1, chord.sup.length - 2)),
+        text: chord.sup,
         ...getAttr(defaultSizeSup)
       });
     }
@@ -75,7 +66,7 @@ const ChordTexts = (() => {
       texts.push({
         x: bassX,
         y: bassY,
-        text: replaceFlat(chord.bass.substr(1, chord.bass.length)),
+        text: chord.bass,
         ...getAttr(defaultSizeBass)
       });
       lines.push({
@@ -154,6 +145,6 @@ const ChordTexts = (() => {
     getChordSvgElems,
     getSvgElems
   };
-})();
+};
 
 export default ChordTexts;
