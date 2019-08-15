@@ -1,5 +1,5 @@
-import getBarLines from "../src/getBarLines";
-import BarView from "../src/BarView";
+import getBarLines from "../src/bars/getBarLines";
+import BarView from "../src/bars/BarView";
 import aloneTogether from "./chord-progressions/alone-together";
 
 describe("getBarLines", () => {

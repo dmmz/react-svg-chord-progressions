@@ -1,6 +1,6 @@
 import Sections from "../src/Sections";
 import aloneTogether from "./chord-progressions/alone-together";
-import BarView from "../src/BarView";
+import BarView from "../src/bars/BarView";
 
 describe("Sections", () => {
   test("should work without default settings", () => {

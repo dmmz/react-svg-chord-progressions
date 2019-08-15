@@ -1,5 +1,5 @@
 import getTimeSignature from "../src/getTimeSignature";
-import BarView from "../src/BarView";
+import BarView from "../src/bars/BarView";
 import aloneTogether from "./chord-progressions/alone-together";
 
 describe("getTimeSignature", () => {

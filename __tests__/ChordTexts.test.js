@@ -1,4 +1,4 @@
-import ChordTexts from "../src/ChordTexts.js";
+import ChordTexts from "../src/chords/ChordTexts.js";
 
 describe("ChordTexts", () => {
   const x = 0,
