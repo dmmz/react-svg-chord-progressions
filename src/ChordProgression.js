@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
 
+import BarView from "./bars/BarView";
+import getBarLines from "./bars/getBarLines";
+import ChordTexts from "./chords/ChordTexts";
+import { transformChords, getChordTextScale } from "./chords/utils";
 import Endings from "./Endings";
-import ChordTexts from "./ChordTexts";
-import getBarLines from "./getBarLines";
 import Sections from "./Sections";
 import getTimeSignature from "./getTimeSignature";
 import SvgRenderer from "./SvgRenderer";
-import BarView from "./BarView";
 import Selections from "./Selections";
 import PropTypes from "prop-types";
-import transformChords from "./transformChords";
 
 const propTypes = {
   width: PropTypes.number.isRequired,
@@ -23,33 +23,6 @@ const propTypes = {
   selectedBars: PropTypes.array
 };
 
-const getScale = (bars, barWidth) => {
-  /*
-  F maj7
-  Db maj7
-  B halfdim
-  F# halfdim
-  F 7(sus4,9)
-  Eb 7(sus4,9)
-  Db major-13th
-  Ab 7(#11,9,13)
-  Eb 7(sus4,9,13)
-  C suspended-fourth
-  */
-  bars.reduce((prev, bar) => {
-    const width = barWidth / bar.chords.length;
-    const maxChorStringLength = bar.chords.reduce((prev, chord) => {
-      const chordStringLength = ["pitch", "chordType", "sup"].reduce(
-        (prev, key) => {
-          return prev + (!!chord[key] ? chord[key].length : 0);
-        },
-        0
-      );
-      return !prev || chordStringLength < prev ? chordStringLength : prev;
-    }, null);
-    return prev + bar.chords[0].pitch;
-  }, "");
-};
 const SvgChordProgression = props => {
   let barView = new BarView({
     width: props.width,
@@ -80,9 +53,9 @@ const SvgChordProgression = props => {
 
   const svg = new SvgRenderer();
 
-  getScale(bars, barView.bar.width);
+  const scale = getChordTextScale(bars, barView.bar.width);
 
-  const chordTexts = ChordTexts(0.8);
+  const chordTexts = ChordTexts(scale);
   const { startX, ...chordTextsSvgElems } = chordTexts.getSvgElems(
     bars,
     barView
