@@ -82,12 +82,10 @@ const Selections = (() => {
             y: dims.y,
             width: dims.endX - dims.x,
             height: barView.bar.height,
-            attr: {
-              fill: color,
-              "fill-opacity": 0.3,
-              stroke: color,
-              "stroke-opacity": 1
-            }
+            fill: color,
+            fillOpacity: 0.3,
+            stroke: color,
+            strokeOpacity: 1
           };
         }
       );

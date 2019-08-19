@@ -127,7 +127,7 @@ const SvgChordProgression = props => {
     <svg width={props.width} height={barView.getHeight(bars.length)}>
       {svg.render()}
       {barsRender()}
-      {/*selectionsRender(props.selections)*/}
+      {selectionsRender(props.selections)}
     </svg>
   );
 };
