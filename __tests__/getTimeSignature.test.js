@@ -27,13 +27,13 @@ describe("getTimeSignature", () => {
     expect(fn).toThrow("first bar has no time signature");
   });
 
-  test("should return two texts, with default font-size and colod", () => {
+  test("should return two texts, with default font-size and color", () => {
     const timeSigTexts = getTimeSignature(bars, barView);
     expect(timeSigTexts).toHaveLength(2);
 
     timeSigTexts.map(text => {
-      expect(text.attr.fill).toBeDefined();
-      expect(text.attr["font-size"]).toBeDefined();
+      expect(text.fill).toBeDefined();
+      expect(text.fontSize).toBeDefined();
     });
   });
 
@@ -43,8 +43,8 @@ describe("getTimeSignature", () => {
     expect(timeSigTexts).toHaveLength(2);
 
     timeSigTexts.map(text => {
-      expect(text.attr.fill).toBe("#ODO");
-      expect(text.attr["font-size"]).toBe(40);
+      expect(text.fill).toBe("#ODO");
+      expect(text.fontSize).toBe(40);
     });
   });
 });

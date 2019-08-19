@@ -3,12 +3,16 @@ import ChordTexts from "../src/chords/ChordTexts.js";
 describe("ChordTexts", () => {
   const x = 0,
     y = 0;
+  let chordTexts;
+  beforeAll(() => {
+    chordTexts = new ChordTexts(1);
+  });
   describe("getChordSvgElems", () => {
     let svgElems;
 
     test("simple chord should return texts but not lines", () => {
       //Am7
-      svgElems = ChordTexts.getChordSvgElems(
+      svgElems = chordTexts.getChordSvgElems(
         {
           pitch: "A",
           chordType: "m7"
@@ -22,7 +26,7 @@ describe("ChordTexts", () => {
 
     test("chord with bass returns texts and 1 lines", () => {
       //Am7/G
-      svgElems = ChordTexts.getChordSvgElems(
+      svgElems = chordTexts.getChordSvgElems(
         {
           pitch: "A",
           chordType: "m7",
@@ -36,7 +40,7 @@ describe("ChordTexts", () => {
     });
 
     test("chord same symbol (%) should return no text, 1 lines and 2 circles", () => {
-      svgElems = ChordTexts.getChordSvgElems(
+      svgElems = chordTexts.getChordSvgElems(
         {
           same: true
         },

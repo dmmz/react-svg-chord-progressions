@@ -52,11 +52,10 @@ describe("Endings", () => {
       expect(text.x).toBeGreaterThanOrEqual(0);
       expect(text.y).toBeGreaterThanOrEqual(0);
       expect(text).toHaveProperty("text");
-      expect(typeof text.attr).toBe("object");
 
-      expect(text.attr).toHaveProperty("fill");
-      expect(text.attr).toHaveProperty("font-size");
-      expect(text.attr).toHaveProperty("text-anchor");
+      expect(text).toHaveProperty("fill");
+      expect(text).toHaveProperty("fontSize");
+      expect(text).toHaveProperty("textAnchor");
     });
   });
 });
