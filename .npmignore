@@ -1,0 +1,7 @@
+src
+__tests__
+dist
+examples
+.babelrc
+.gitignore
+*.config.js
