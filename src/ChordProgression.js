@@ -20,10 +20,10 @@ const propTypes = {
   colorSelected: PropTypes.string,
   colorActive: PropTypes.string,
   activeBar: PropTypes.number,
-  selectedBars: PropTypes.array
+  selectedBars: PropTypes.array,
 };
 
-const SvgChordProgression = props => {
+const SvgChordProgression = (props) => {
   let barView = new BarView({
     width: props.width,
     barsPerLine: 4,
@@ -33,22 +33,22 @@ const SvgChordProgression = props => {
       top: 20,
       left: 20,
       line: 30,
-      right: 20
+      right: 20,
     },
     bar: {
       padding: {
         top: 25,
-        left: 8
+        left: 8,
       },
       height: 40,
-      repetitionLineSpace: 4
-    }
+      repetitionLineSpace: 4,
+    },
   });
   // logic in constructor: it won't be updated with a render caused by receiving new props,
   // has to be updated with a 'key' prop change,
   // this is done for performance reasons
   const bars = props.bars
-    .map(bar => transformChords(bar))
+    .map((bar) => transformChords(bar))
     .map((bar, i) => barView.setDimensions(bar, i));
 
   const svg = new SvgRenderer();
@@ -92,31 +92,30 @@ const SvgChordProgression = props => {
       isCursorBar = i === activeBar;
 
       barProps = {
-        key: "bar" + i,
         width: barView.bar.width,
         height: barView.bar.height,
         fill: isCursorBar ? colorActive : isSelected ? colorSelected : "#fff",
         fillOpacity: isSelected || isCursorBar ? opacity : 0,
         strokeOpacity: 0,
-        mousedown: e => {
+        mousedown: (e) => {
           e.preventDefault();
           barMouseDown(i);
         },
-        mouseover: e => {
+        mouseover: (e) => {
           e.preventDefault();
           barMouseOver(i);
         },
-        mouseup: e => {
+        mouseup: (e) => {
           e.preventDefault();
           barMouseUp(i);
-        }
+        },
       };
 
       barComponents.push({ ...bar.dimensions, ...barProps });
     }
-    return barComponents.map(props => <rect {...props} />);
+    return barComponents.map((props, i) => <rect key={`bar${i}`} {...props} />);
   };
-  const selectionsRender = selections => {
+  const selectionsRender = (selections) => {
     if (!selections || !selections.length) return;
 
     const rects = Selections.getRects(bars, barView, startX, selections);
@@ -131,7 +130,7 @@ const SvgChordProgression = props => {
     </svg>
   );
 };
-const ChordProgression = props => {
+const ChordProgression = (props) => {
   const ref = useRef(null);
   const [width, setWidth] = useState(0);
   useEffect(() => {
@@ -141,7 +140,7 @@ const ChordProgression = props => {
 
   return (
     <div ref={ref}>
-      {!!width && <SvgChordProgression width={width} {...props} />}
+      <SvgChordProgression width={width} {...props} />
     </div>
   );
 };

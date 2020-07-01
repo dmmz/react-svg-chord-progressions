@@ -7,15 +7,15 @@ class BarView {
       left: 20,
       line: 30,
       right: 20,
-      bottom: 20
+      bottom: 20,
     };
     const DEFAULT_BAR_DIMENSIONS = {
       padding: {
         top: 25,
-        left: 8
+        left: 8,
       },
       height: 40,
-      repetitionLineSpace: 4
+      repetitionLineSpace: 4,
     };
 
     this.barsPerLine = props.barsPerLine || DEFAULT_BARS_PER_LINE;
@@ -54,7 +54,7 @@ class BarView {
     }
 
     let widthList = durations.map(
-      duration =>
+      (duration) =>
         (this.bar.width - this.bar.padding.left) /
         this.getDivisor(timeSig, duration)
     );

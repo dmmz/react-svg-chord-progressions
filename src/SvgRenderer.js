@@ -26,10 +26,12 @@ class SvgRenderer {
         this.paths.map((data, i) => {
           if (typeof data === "object") {
             const { d, ...props } = { ...data };
-            return <path d={d} {...props} />;
+            return <path key={`p${i}`} d={d} {...props} />;
           }
 
-          return <path d={data} stroke="black" strokeWidth="1px" />;
+          return (
+            <path key={`p${i}`} d={data} stroke="black" strokeWidth="1px" />
+          );
         })
       );
     }
@@ -38,7 +40,11 @@ class SvgRenderer {
         this.texts.map((props, i) => {
           let text;
           ({ text, ...props } = props);
-          return <text {...props}>{text}</text>;
+          return (
+            <text key={`t${i}`} {...props}>
+              {text}
+            </text>
+          );
         })
       );
     }
@@ -46,14 +52,14 @@ class SvgRenderer {
     if (this.circles.length)
       svgElems = svgElems.concat(
         this.circles.map((props, i) => {
-          return <circle {...props} />;
+          return <circle key={`c${i}`} {...props} />;
         })
       );
 
     if (this.rects.length) {
       svgElems = svgElems.concat(
         this.rects.map((props, i) => {
-          return <rect {...props} />;
+          return <rect key={`r${i}`} {...props} />;
         })
       );
     }
