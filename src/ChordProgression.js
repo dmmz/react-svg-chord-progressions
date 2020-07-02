@@ -97,15 +97,15 @@ const SvgChordProgression = (props) => {
         fill: isCursorBar ? colorActive : isSelected ? colorSelected : "#fff",
         fillOpacity: isSelected || isCursorBar ? opacity : 0,
         strokeOpacity: 0,
-        mousedown: (e) => {
+        onMouseDown: (e) => {
           e.preventDefault();
           barMouseDown(i);
         },
-        mouseover: (e) => {
+        onMouseOver: (e) => {
           e.preventDefault();
           barMouseOver(i);
         },
-        mouseup: (e) => {
+        onMouseUp: (e) => {
           e.preventDefault();
           barMouseUp(i);
         },
@@ -134,7 +134,10 @@ const ChordProgression = (props) => {
   const ref = useRef(null);
   const [width, setWidth] = useState(0);
   useEffect(() => {
-    if (!ref.current || !ref.current.getBoundingClientRect().width) return;
+    if (!ref.current || !ref.current.getBoundingClientRect().width) {
+      console.warn("width of wrapping div is 0 so nothing will be drawn");
+      return;
+    }
     setWidth(ref.current.getBoundingClientRect().width);
   }, [ref.current]);
 
