@@ -1,5 +1,5 @@
-export const transformChords = bar => {
-  const chords = bar.chords.map(chord => {
+export const transformChords = (bar) => {
+  const chords = bar.chords.map((chord) => {
     return !chord.pitch
       ? chord
       : {
@@ -11,18 +11,18 @@ export const transformChords = bar => {
             : null,
           bass: chord.bass
             ? replaceFlat(chord.bass.substr(1, chord.bass.length))
-            : null
+            : null,
         };
   });
   return {
     ...bar,
-    chords
+    chords,
   };
 };
 
-const replaceFlat = str => str.replace(/b/g, "\u266D");
+const replaceFlat = (str) => str.replace(/b/g, "\u266D");
 
-const getSpecialSymbol = chordType => {
+const getSpecialSymbol = (chordType) => {
   if (chordType === "maj7") return "\u2206"; //  ∆
   if (chordType === "halfdim") return "\xF8"; //  ø
 
@@ -55,11 +55,11 @@ export const getChordTextScale = (bars, barWidth) => {
   return smallestCharWidth / standardCharWidth;
 };
 
-const getLengthFromLongestChordString = bar =>
+const getLengthFromLongestChordString = (bar) =>
   bar.chords.reduce((prev, chord, j) => {
     const chordStringLength = ["pitch", "chordType", "sup"].reduce(
       (prev, key) => {
-        return prev + (chord[key] ? chord[key].length : 0);
+        return prev + (chord[key] ? chord[key].length : 1);
       },
       0
     );
