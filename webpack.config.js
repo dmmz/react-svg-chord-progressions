@@ -4,7 +4,9 @@ const htmlWebpackPlugin = new HtmlWebpackPlugin({
   template: path.join(__dirname, "example/src/index.html"),
   filename: "./index.html"
 });
+
 module.exports = {
+  mode: 'production',
   entry: "./example/src/index.js",
   plugins: [htmlWebpackPlugin],
   module: {
@@ -19,12 +21,19 @@ module.exports = {
         use: ["style-loader", "css-loader"]
       },
       {
-        test: /\.(png|woff|woff2|eot|ttf|svg)$/,
-        loader: "url-loader?limit=100000"
+        test: /\.(png|woff|woff2|eot|ttf)$/,
+        type: 'asset/resource',
+        generator: {
+          filename: 'assets/[hash][ext][query]',
+        }
       }
     ]
   },
   devServer: {
     port: 3001
+  },
+  output: {
+    clean: true, // Clean the output directory before each build
+    assetModuleFilename: 'assets/[hash][ext][query]',
   }
 };
