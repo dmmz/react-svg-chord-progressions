@@ -44,9 +44,11 @@ export const getChordTextScale = (bars, barWidth) => {
   */
   const standardCharWidth = 17;
   const smallestCharWidth = bars.reduce((prev, bar, i) => {
-    const width = barWidth / bar.chords.length;
-    const maxChorStringLength = getLengthFromLongestChordString(bar);
-    const charWidth = maxChorStringLength ? width / maxChorStringLength : 0;
+    const chordWidth = barWidth / bar.chords.length;
+    const maxChorStringLength = getLongestChordLength(bar);
+    const charWidth = maxChorStringLength
+      ? chordWidth / maxChorStringLength
+      : 0;
     return !prev ? charWidth : prev > charWidth ? charWidth : prev;
   }, null);
 
@@ -55,13 +57,13 @@ export const getChordTextScale = (bars, barWidth) => {
   return smallestCharWidth / standardCharWidth;
 };
 
-const getLengthFromLongestChordString = (bar) =>
-  bar.chords.reduce((prev, chord, j) => {
-    const chordStringLength = ["pitch", "chordType", "sup"].reduce(
-      (prev, key) => {
-        return prev + (chord[key] ? chord[key].length : 1);
-      },
-      0
-    );
-    return !prev || chordStringLength > prev ? chordStringLength : prev;
-  }, null);
+const defaultLength = 3.75;
+
+export const getChordLength = ({ pitch, chordType, sup }) =>
+  pitch?.length || 0 + chordType ? defaultLength : 0 + sup ? defaultLength : 0;
+
+const getLongestChordLength = (bar) =>
+  bar.chords.reduce((prev, chord) => {
+    const chorLength = getChordLength(chord);
+    return chorLength > prev ? chorLength : prev;
+  }, 0);
