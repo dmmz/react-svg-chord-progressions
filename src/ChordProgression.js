@@ -9,7 +9,8 @@ import Sections from "./Sections";
 import getTimeSignature from "./getTimeSignature";
 import SvgRenderer from "./SvgRenderer";
 import Selections from "./Selections";
-import useWidth from "./useWidth";
+import useDimensions from "./useDimensions";
+import useAutoScroll from "./useAutoScroll";
 import PropTypes from "prop-types";
 
 const propTypes = {
@@ -122,9 +123,14 @@ const SvgChordProgression = (props) => {
     const rects = Selections.getRects(bars, barView, startX, selections);
     return rects.map((props, i) => <rect key={i} {...props} />);
   };
+  const autoScrollRef = useAutoScroll(bars, props.activeBar, props.divRef);
 
   return (
-    <svg width={props.width} height={barView.getHeight(bars.length)}>
+    <svg
+      ref={autoScrollRef}
+      width={props.width}
+      height={barView.getHeight(bars.length)}
+    >
       {svg.render()}
       {barsRender()}
       {selectionsRender(props.selections)}
@@ -132,11 +138,11 @@ const SvgChordProgression = (props) => {
   );
 };
 const ChordProgression = (props) => {
-  const { widthRef, width } = useWidth();
+  const { divRef, width, height } = useDimensions();
 
   return (
-    <div ref={widthRef}>
-      <SvgChordProgression width={width} {...props} />
+    <div style={{ height, overflowY: "scroll" }} ref={divRef}>
+      <SvgChordProgression divRef={divRef} width={width} {...props} />
     </div>
   );
 };
