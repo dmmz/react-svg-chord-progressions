@@ -1,5 +1,22 @@
 @font-face { 
     font-family: 'jazz-font'; 
-    src: url('fonts/chords.woff') format('woff'), 
-         url('fonts/chords.ttf') format('truetype'); 
+    src: url('fonts/chords.woff') format('woff'); 
+}
+
+h1 {
+    font-size:larger;
+    color:#48489F;
+}
+#header {
+    margin: 10px 0;
+}
+button {
+    padding:10px;
+    margin: 2px;
+    color: white;
+    font-weight: 600;
+    background-color: #48489F;
+    border:0;
+    border-radius: 5px;
+    cursor:pointer;
 }
