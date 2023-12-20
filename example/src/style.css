@@ -9,9 +9,11 @@ h1 {
 }
 #header {
     margin: 10px 0;
+    
 }
 button {
-    padding:10px;
+    padding:5px;
+    font-size: 0.75rem;
     margin: 2px;
     color: white;
     font-weight: 600;
@@ -19,4 +21,19 @@ button {
     border:0;
     border-radius: 5px;
     cursor:pointer;
+}
+
+.msg-wrapper {
+    position: absolute;
+    width: 100%;
+    display:flex;
+    justify-content: center;
+}
+.fade-out {
+    opacity: 1;
+    color: green;
+}
+.fade-out-hidden {
+    transition: all 1s ease-in-out;
+    opacity: 0;
 }

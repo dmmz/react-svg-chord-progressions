@@ -42,6 +42,13 @@ const Example = () => {
   const toggleShowSelections = () =>
     setShowSelections((showSelections) => !showSelections);
 
+  const [okDimMsg, setOkDimMsg] = useState(false);
+
+  const updateDimensions = () => {
+    window.dispatchEvent(new CustomEvent('chords-dimensions-update'));
+    setOkDimMsg(true);
+    setTimeout(() => setOkDimMsg(false), 1000);
+  }
   return (
     <div>
       <div id="header">
@@ -52,8 +59,12 @@ const Example = () => {
         </button>
         <button onClick={stop}>Stop</button>
         <button onClick={toggleShowSelections}>
-          {showSelections ? "Hide selections" : "Show selections"}
+          {showSelections ? "Hide Sel." : "Show Sel."}
         </button>
+        <button onClick={updateDimensions}>Update dim.</button>
+      </div>
+      <div class="msg-wrapper">
+        <div className={`fade-out${!okDimMsg ? '-hidden' : ''}`}>Updated</div>
       </div>
       <ChordProgression
         bars={aloneTogether}
