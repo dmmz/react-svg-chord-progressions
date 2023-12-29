@@ -46,7 +46,8 @@
     "webpack-dev-server": "^4.15.1"
   },
   "dependencies": {
-    "prop-types": "^15.8.1"
+    "prop-types": "^15.8.1",
+    "react-device-detect": "^2.2.3"
   },
   "jest": {
     "testPathIgnorePatterns": [

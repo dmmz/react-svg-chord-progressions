@@ -9,9 +9,10 @@ import Sections from "./Sections";
 import getTimeSignature from "./getTimeSignature";
 import SvgRenderer from "./SvgRenderer";
 import Selections from "./Selections";
-import useDimensions from "./useDimensions";
+import useWidth from "./useWidth";
 import useAutoScroll from "./useAutoScroll";
 import PropTypes from "prop-types";
+import useHeight from "./useHeight";
 
 const propTypes = {
   width: PropTypes.number.isRequired,
@@ -138,11 +139,22 @@ const SvgChordProgression = (props) => {
   );
 };
 const ChordProgression = (props) => {
-  const { divRef, width, height } = useDimensions();
+  const wrappingDivRef = useRef(null);
+
+  const width = useWidth(wrappingDivRef);
+  const height = useHeight(wrappingDivRef);
 
   return (
-    <div style={{ height, overflowY: "scroll" }} ref={divRef}>
-      <SvgChordProgression divRef={divRef} width={width} {...props} />
+    <div
+      style={{
+        height,
+        overflowY: "scroll",
+        overflowX: "hidden",
+        width: "100%",
+      }}
+      ref={wrappingDivRef}
+    >
+      <SvgChordProgression divRef={wrappingDivRef} width={width} {...props} />
     </div>
   );
 };

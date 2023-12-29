@@ -1,39 +1,58 @@
-@font-face { 
-    font-family: 'jazz-font'; 
-    src: url('fonts/chords.woff') format('woff'); 
+@font-face {
+  font-family: "jazz-font";
+  src: url("fonts/chords.woff") format("woff");
 }
 
 h1 {
-    font-size:larger;
-    color:#48489F;
+  font-size: larger;
+  color: #48489f;
 }
 #header {
-    margin: 10px 0;
-    
+  margin: 10px 0;
 }
 button {
-    padding:5px;
-    font-size: 0.75rem;
-    margin: 2px;
-    color: white;
-    font-weight: 600;
-    background-color: #48489F;
-    border:0;
-    border-radius: 5px;
-    cursor:pointer;
+  padding: 5px;
+  font-size: 0.75rem;
+  margin: 2px;
+  color: white;
+  font-weight: 600;
+  background-color: #48489f;
+  border: 0;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 .msg-wrapper {
-    position: absolute;
-    width: 100%;
-    display:flex;
-    justify-content: center;
+  position: absolute;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 .fade-out {
-    opacity: 1;
-    color: green;
+  opacity: 1;
+  color: green;
 }
 .fade-out-hidden {
-    transition: all 1s ease-in-out;
-    opacity: 0;
+  transition: all 1s ease-in-out;
+  opacity: 0;
+}
+
+#content {
+  display: flex;
+  flex-direction: row;
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+}
+
+#youtube {
+  width: 199px;
+  height: 199px;
+  background-color: rgb(190, 151, 151);
+  margin: 5px auto;
+}
+
+#player {
+  display: flex;
+  justify-content: center;
 }
