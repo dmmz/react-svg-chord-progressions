@@ -6,12 +6,8 @@ export const transformChords = (bar) => {
           ...chord,
           pitch: replaceFlat(chord.pitch),
           chordType: getSpecialSymbol(chord.chordType),
-          sup: chord.sup
-            ? replaceFlat(chord.sup.substr(1, chord.sup.length - 2))
-            : null,
-          bass: chord.bass
-            ? replaceFlat(chord.bass.substr(1, chord.bass.length))
-            : null,
+          sup: chord.sup ? replaceFlat(chord.sup.substr(1, chord.sup.length - 2)) : null,
+          bass: chord.bass ? replaceFlat(chord.bass.substr(1, chord.bass.length)) : null,
         };
   });
   return {
@@ -59,8 +55,8 @@ export const getChordTextScale = (bars, barWidth) => {
 
 const defaultLength = 3.75;
 
-export const getChordLength = ({ pitch, chordType, sup }) =>
-  pitch?.length || 0 + chordType ? defaultLength : 0 + sup ? defaultLength : 0;
+export const getChordLength = ({ pitch, chordType, sup, same }) =>
+  (pitch?.length || (same ? 1 : 0)) + (chordType ? defaultLength : 0) + (sup ? defaultLength : 0);
 
 const getLongestChordLength = (bar) =>
   bar.chords.reduce((prev, chord) => {
