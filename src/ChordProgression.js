@@ -141,7 +141,7 @@ const ChordProgression = (props) => {
   const { divRef, width, height } = useDimensions();
 
   return (
-    <div style={{ height, overflowY: "scroll" }} ref={divRef}>
+    <div style={{ height, overflowY: "scroll",  scrollbarWidth: "none" }} ref={divRef}>
       <SvgChordProgression divRef={divRef} width={width} {...props} />
     </div>
   );
