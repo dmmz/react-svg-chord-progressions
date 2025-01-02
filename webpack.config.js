@@ -9,6 +9,9 @@ module.exports = {
   mode: "production",
   entry: "./example/src/index.js",
   plugins: [htmlWebpackPlugin],
+  resolve: {
+    extensions: ['.js', '.jsx'],
+  },
   module: {
     rules: [
       {

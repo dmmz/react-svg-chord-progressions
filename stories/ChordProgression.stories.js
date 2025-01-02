@@ -1,3 +1,4 @@
+import React from 'react';
 import ChordProgression from "../src/ChordProgression";
 import aloneTogether from "../__tests__/chord-progressions/alone-together";
 import "../example/src/style.css";

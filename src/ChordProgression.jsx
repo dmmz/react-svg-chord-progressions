@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React from "react";
 
 import BarView from "./bars/BarView";
 import getBarLines from "./bars/getBarLines";
