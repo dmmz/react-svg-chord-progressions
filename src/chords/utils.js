@@ -38,7 +38,7 @@ export const getChordTextScale = (bars, barWidth) => {
   Eb 7(sus4,9,13)
   C suspended-fourth
   */
-  const standardCharWidth = 17;
+  const standardCharWidth = 8;
   const smallestCharWidth = bars.reduce((prev, bar, i) => {
     const chordWidth = barWidth / bar.chords.length;
     const maxChorStringLength = getLongestChordLength(bar);
